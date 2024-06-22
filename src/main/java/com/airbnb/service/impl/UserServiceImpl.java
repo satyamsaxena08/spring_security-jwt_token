@@ -39,12 +39,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String verifyLogIn(LogInDto logInDto) {
+    public String verifyLogIn(LogInDto logInDto) {//3.getting the data from db
         Optional<PropertyUser> byUsername = propertyUserRepository.findByUsername(logInDto.getUsername());
         if (byUsername.isPresent()){
-            PropertyUser propertyUser = byUsername.get();
+            PropertyUser propertyUser = byUsername.get();//3.1 getting the data from db
+
            if (BCrypt.checkpw(logInDto.getPassword(),propertyUser.getPassword())){
-            return    jwtService.generateTokken(propertyUser);
+            return    jwtService.generateToken(propertyUser); //4.calling generateToken method
            }
         }
         return null;

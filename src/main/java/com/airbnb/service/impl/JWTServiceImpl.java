@@ -19,7 +19,7 @@ public class JWTServiceImpl {
       @Value("${jwt.expiryDuration}")
       private int expiryTime;
 
-      private final static String USER_NAME = "username";
+      private final static String USER_NAME= "username";
 
       private Algorithm algorithm;
 
@@ -28,12 +28,11 @@ public class JWTServiceImpl {
         algorithm= Algorithm.HMAC256(algorithmKey);
     }
 
-    public String generateTokken(PropertyUser propertyUser){
+    public String generateToken(PropertyUser propertyUser){//5. it generating token
 
-        return JWT.create().withClaim(USER_NAME,propertyUser.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+expiryTime))
+        return JWT.create().withClaim(USER_NAME,propertyUser.getUsername())//5.1 it generating token based on                .withExpiresAt(new Date(System.currentTimeMillis()+expiryTime))
                 .withIssuer(issuer)
-                .sign(algorithm);
+                .sign(algorithm);//6.token generate return back to controller
     }
 
     public String getUserName(String token){

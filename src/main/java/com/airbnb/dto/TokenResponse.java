@@ -1,6 +1,6 @@
 package com.airbnb.dto;
 
-public class TokenResponse {
+public class TokenResponse { //this class return token in postman as jso object
     private String type="Bearer";
     private String token;
 

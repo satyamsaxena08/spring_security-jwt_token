@@ -30,19 +30,19 @@ public class UserController { //45.00-sign in  octt-27/03
         return  new ResponseEntity<>("Something went wrong",HttpStatus.INTERNAL_SERVER_ERROR);
     }
     @PostMapping("/login")
-    public ResponseEntity<?> logIn(@RequestBody LogInDto logInDto){
-        String token = userService.verifyLogIn(logInDto);
+    public ResponseEntity<?> logIn(@RequestBody LogInDto logInDto){ //1.sending dto to logon
+        String token = userService.verifyLogIn(logInDto);//2. login calling verifyLogin method
        if (token!=null){
-           TokenResponse tokenReaponse = new TokenResponse();
-           tokenReaponse.setToken(token);
-           return new ResponseEntity<>(tokenReaponse,HttpStatus.OK);
+           TokenResponse tokenResponse = new TokenResponse();
+           tokenResponse.setToken(token);
+           return new ResponseEntity<>(tokenResponse,HttpStatus.OK); //6.return token  back-> now that token is use further url protection
        }
         return new ResponseEntity<>(" Invalid credential",HttpStatus.UNAUTHORIZED);
     }
 
-    @GetMapping("/profile")
-    public PropertyUser getCurrentUserProfile(@AuthenticationPrincipal PropertyUser user){
-        return user;
+@GetMapping("/profile") //when i access this url automatically extract the session id & check session id with spring boot
+    public PropertyUser getCurrentUserProfile(@AuthenticationPrincipal PropertyUser user){//which it has generated earlier if that matches
+        return user;//which means it is current user interacting and that user details automatically put that ito PropertyUser user
 
     }
 }
